@@ -17,7 +17,6 @@ import NodeManager from "./Goml/NodeManager";
 import Debugger from "./Debug/Debugger";
 import GomlLoader from "./Goml/GomlLoader";
 import ResourceLoader from "./Core/ResourceLoader";
-import ModuleManager from "./Module/ModuleManager";
 
 import Quaternion from "./Math/Quaternion";
 import Vector2 from "./Math/Vector2";
@@ -62,8 +61,7 @@ class JThreeInit {
       || (isArray(argu) && (<any[]>argu).every((v) => v instanceof GomlTreeNodeBase))) {
       return new J3Object(argu);
     } else if (typeof argu === "function") {
-      const loader = Context.getContextComponent<ResourceLoader>(ContextComponents.ResourceLoader);
-      loader.promise.then(argu).catch((e) => {
+      ResourceLoader.promise.then(argu).catch((e) => {
         console.error(e);
       });
       return;
@@ -98,17 +96,12 @@ class JThreeInit {
 
     window["j3"]["lateStart"] = JThreeInit._startInitialize;
     Context.init();
-    Context.registerContextComponent(new LoopManager());
-    Context.registerContextComponent(new Timer());
-    Context.registerContextComponent(new ResourceLoader());
     Context.registerContextComponent(new SceneManager());
     Context.registerContextComponent(new CanvasManager());
     Context.registerContextComponent(new ResourceManager());
-    Context.registerContextComponent(new NodeManager());
     Context.registerContextComponent(new Debugger());
     Context.registerContextComponent(new MaterialManager());
     Context.registerContextComponent(new RenderStageRegistory());
-    Context.registerContextComponent(new ModuleManager());
     if (JThreeInit.selfTag.getAttribute("x-lateLoad") !== "true") {
       window.addEventListener("DOMContentLoaded", () => {
         JThreeInit._startInitialize();
@@ -129,14 +122,12 @@ class JThreeInit {
   }
 
   private static _startInitialize(): void {
-    const nodeManager = Context.getContextComponent<NodeManager>(ContextComponents.NodeManager); // This is not string but it is for conviniesnce.
-    const loader = new GomlLoader(nodeManager, JThreeInit.selfTag);
+    const loader = new GomlLoader(JThreeInit.selfTag);
     PrimitiveRegistory.registerDefaultPrimitives();
     Context.getContextComponent<Debugger>(ContextComponents.Debugger).attach();
-    const resourceLoader = Context.getContextComponent<ResourceLoader>(ContextComponents.ResourceLoader);
     loader.initForPage();
-    resourceLoader.promise.then(() => {
-      Context.getContextComponent<LoopManager>(ContextComponents.LoopManager).begin();
+    ResourceLoader.promise.then(() => {
+      LoopManager.begin();
     });
   }
 }

@@ -4,7 +4,6 @@ import Scene from "./Scene";
 import IContextComponent from "../IContextComponent";
 import ContextComponents from "../ContextComponents";
 import LoopManager from "./LoopManager";
-import Context from "../Context";
 
 
 /**
@@ -18,8 +17,7 @@ class SceneManager extends EEObject implements IContextComponent {
 
     constructor() {
         super();
-        const loopManager = Context.getContextComponent<LoopManager>(ContextComponents.LoopManager);
-        loopManager.addAction(5000, () => this.renderAll());
+        LoopManager.addAction(5000, () => this.renderAll());
     }
 
     public getContextComponentIndex(): number {

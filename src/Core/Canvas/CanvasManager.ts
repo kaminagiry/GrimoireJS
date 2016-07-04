@@ -22,9 +22,8 @@ class CanvasManager extends EEObject implements IContextComponent {
   constructor() {
     super();
     this.setMaxListeners(10000);
-    const loopManager = Context.getContextComponent<LoopManager>(ContextComponents.LoopManager);
-    loopManager.addAction(4000, () => this.beforeRenderAll());
-    loopManager.addAction(6000, () => this.afterRenderAll());
+    LoopManager.addAction(4000, () => this.beforeRenderAll());
+    LoopManager.addAction(6000, () => this.afterRenderAll());
   }
 
   /**

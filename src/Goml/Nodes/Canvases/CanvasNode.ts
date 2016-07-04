@@ -81,7 +81,7 @@ class CanvasNode extends CoreRelatedNodeBase<Canvas> {
     this.canvasFrames.loaderContainer.innerHTML = defaultLoader;
 
     const progressLoaders = this.canvasFrames.loaderContainer.querySelectorAll(".x-j3-loader-progress");
-    Context.getContextComponent<ResourceLoader>(ContextComponents.ResourceLoader).promise.then(() => {
+    ResourceLoader.promise.then(() => {
       const loaders = this.canvasFrames.resizeDetecter.querySelectorAll(".x-j3-loader-container");
       for (let i = 0; i < loaders.length; i++) {
         const loader = loaders.item(i);

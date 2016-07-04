@@ -11,10 +11,6 @@ class ContextComponents {
     return 2;
   }
 
-  public static get NodeManager(): number {
-    return 3;
-  }
-
   public static get LoopManager(): number {
     return 4;
   }
@@ -34,17 +30,8 @@ class ContextComponents {
   public static get MaterialManager(): number {
     return 8;
   }
-
-  public static get PrimitiveRegistory(): number {
-    return 9;
-  }
-
   public static get RenderStageRegistory(): number {
     return 10;
-  }
-
-  public static get ModuleManager(): number {
-    return 11;
   }
 }
 

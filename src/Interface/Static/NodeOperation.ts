@@ -5,23 +5,21 @@ import NodeManager from "../../Goml/NodeManager";
 
 class NodeOperation {
   public static insert(targets: GomlTreeNodeBase[], contents: GomlTreeNodeBase[], indexFunc?: (target: GomlTreeNodeBase, index: number) => number): void {
-    const nodeManager = Context.getContextComponent<NodeManager>(ContextComponents.NodeManager);
     targets.forEach((target, i) => {
-      let nodeOpMethod = nodeManager.insertNode;
+      let nodeOpMethod = NodeManager.insertNode;
       if (i === targets.length) {
-        nodeOpMethod = nodeManager.moveNode;
+        nodeOpMethod = NodeManager.moveNode;
       }
       const index = indexFunc && indexFunc(target, i);
       contents.forEach((content, j) => {
-        nodeOpMethod.call(nodeManager, content, target, typeof index === "undefined" ? void 0 : index + j);
+        nodeOpMethod.call(NodeManager, content, target, typeof index === "undefined" ? void 0 : index + j);
       });
     });
   }
 
   public static remove(targets: GomlTreeNodeBase[]): void {
-    const nodeManager = Context.getContextComponent<NodeManager>(ContextComponents.NodeManager);
     targets.forEach((target, i) => {
-      nodeManager.removeNode(target);
+      NodeManager.removeNode(target);
     });
   }
 
@@ -29,9 +27,8 @@ class NodeOperation {
     if (deepWithEvents) {
       withEvents = true;
     }
-    const nodeManager = Context.getContextComponent<NodeManager>(ContextComponents.NodeManager);
     return targets.map((target) => {
-      return nodeManager.cloneNode(target, withEvents, deepWithEvents);
+      return NodeManager.cloneNode(target, withEvents, deepWithEvents);
     });
   }
 }
