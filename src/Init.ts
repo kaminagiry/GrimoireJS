@@ -107,7 +107,6 @@ class JThreeInit {
     Context.registerContextComponent(new NodeManager());
     Context.registerContextComponent(new Debugger());
     Context.registerContextComponent(new MaterialManager());
-    Context.registerContextComponent(new PrimitiveRegistory());
     Context.registerContextComponent(new RenderStageRegistory());
     Context.registerContextComponent(new ModuleManager());
     if (JThreeInit.selfTag.getAttribute("x-lateLoad") !== "true") {
@@ -132,7 +131,7 @@ class JThreeInit {
   private static _startInitialize(): void {
     const nodeManager = Context.getContextComponent<NodeManager>(ContextComponents.NodeManager); // This is not string but it is for conviniesnce.
     const loader = new GomlLoader(nodeManager, JThreeInit.selfTag);
-    Context.getContextComponent<PrimitiveRegistory>(ContextComponents.PrimitiveRegistory).registerDefaultPrimitives();
+    PrimitiveRegistory.registerDefaultPrimitives();
     Context.getContextComponent<Debugger>(ContextComponents.Debugger).attach();
     const resourceLoader = Context.getContextComponent<ResourceLoader>(ContextComponents.ResourceLoader);
     loader.initForPage();
